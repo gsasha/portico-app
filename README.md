@@ -11,7 +11,19 @@ tailnet client, away from home.
 
 The server half is the Portico Home Assistant integration, **portico-ha**. This app does nothing useful without it.
 
-Both repositories are developed together. A public link to portico-ha is added here when it is published (PORTICO_HA_URL_TODO).
+Both repositories are developed together. portico-ha is at <https://github.com/gsasha/portico-ha>.
+
+## Getting started
+
+This app needs the **portico-ha** Home Assistant integration (https://github.com/gsasha/portico-ha). The easiest way to set up both is to let an AI assistant do it with you:
+
+**Install portico-ha using its [AI setup prompt](https://github.com/gsasha/portico-ha/blob/main/docs/getting-started/ai-setup-prompt.md) and it will guide you, step by step, through the server and through setting up this app** (install the APK from this repository's [Releases](../../releases), then enrol by QR).
+
+Paste this to an AI assistant:
+
+> Read https://raw.githubusercontent.com/gsasha/portico-ha/main/docs/getting-started/ai-setup-prompt.md and follow it to help me install Portico and its Android app.
+
+Prefer to do it by hand? See [Getting started](docs/getting-started/README.md).
 
 ## What it does
 

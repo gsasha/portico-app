@@ -2,6 +2,8 @@
 
 Enrolment tells the app which Home Assistant to use and signs the phone in. You do it once per phone, by scanning a QR code shown by Home Assistant, or by pasting the text it contains.
 
+Tip: the portico-ha [AI setup prompt](https://github.com/gsasha/portico-ha/blob/main/docs/getting-started/ai-setup-prompt.md) walks you through this whole page and the server side. Paste to an AI assistant: "Read https://raw.githubusercontent.com/gsasha/portico-ha/main/docs/getting-started/ai-setup-prompt.md and follow it to help me install Portico and its Android app."
+
 ## Steps
 
 1. In Home Assistant, open the Portico panel (or the integration's Configure flow, depending on your portico-ha version) and show the enrolment QR for a new phone.
