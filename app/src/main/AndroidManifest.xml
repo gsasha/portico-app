@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Design doc §4.6, §9.8, and §6's Android checklist. PR-G removed the scaffold's
+  RECORD_AUDIO, FOREGROUND_SERVICE and FOREGROUND_SERVICE_PHONE_CALL: the P2 ring is a
+  CallStyle notification with a full-screen intent and no foreground service, and P2 had no
+  audio. The answer path (call/) brings back exactly what it requests and uses: RECORD_AUDIO
+  (requested by InCallActivity), FOREGROUND_SERVICE + FOREGROUND_SERVICE_MICROPHONE (CallService,
+  type microphone, running only while a call the user answered is up) and MODIFY_AUDIO_SETTINGS
+  (call/AndroidAudioRoute). The ring itself still has no foreground service. "Stay connected"
+  (2026-10-15) adds stay/ConnectionService (type connectedDevice, the Settings switch, default on)
+  with FOREGROUND_SERVICE_CONNECTED_DEVICE and CHANGE_NETWORK_STATE.
+  FOREGROUND_SERVICE_PHONE_CALL stays out: that type needs MANAGE_OWN_CALLS and a telecom
+  integration this app does not have. MergedManifestTest asserts the exact set.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- PR-E: re-register after a reboot or an app update (P2 plan §3.4) -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- PR-F: the ring's full-screen intent over the lock screen (spec §4.4). Android 14+ checks
+         it at runtime (canUseFullScreenIntent); Setup shows the real state. -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <!-- PR-C2: scan the enrollment QR. Asked at the moment of use (Setup's "Scan the QR code");
+         refusing it leaves the paste field. The features are optional so the app still installs
+         on a device without a camera or autofocus (CAMERA alone would imply both, required). -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <!-- Answering: talk to the visitor. Requested at the moment of use (InCallActivity, after a
+         press of Answer). RECORD_AUDIO alone would make the microphone a REQUIRED feature, so
+         the app would not install on a device without one; the ring needs no microphone. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- Answering: CallService keeps the microphone alive when the screen is left or locked. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <!-- Stay connected (2026-10-15): ConnectionService, type connectedDevice, keeps the HA socket alive in
+         the background. Android 14+ also demands that a connectedDevice service's app hold ONE of
+         CHANGE_NETWORK_STATE, CHANGE_WIFI_STATE, CHANGE_WIFI_MULTICAST_STATE, NFC, TRANSMIT_IR (or a granted
+         Bluetooth/UWB runtime permission, or a USB permission): without it startForeground throws a
+         SecurityException. CHANGE_NETWORK_STATE is the smallest honest one (a normal permission, granted at
+         install, no prompt); the app never calls its APIs. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- A network change while the phone dozes holds the CPU for 15 s at most (a PARTIAL_WAKE_LOCK with its own timeout,
+         PathRecheckWatcher), so the reconnect is not interrupted by the phone going back to sleep. A normal permission:
+         granted at install, no prompt. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- 0.6.74 (experimental): "Display over other apps", optional, granted by the owner in Settings > Android settings > Over other apps. With it, a ring
+         that arrives while the phone is unlocked and in use opens the ring screen directly (ring/DirectRingLauncher), besides the notification. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- 0.6.76: the call window vibrates itself (the ring channel's own pattern) while it rings on a phone in use; the notification is then on a quiet
+         channel. A normal permission: granted at install, no prompt. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- DEV-807 slice 2 (Panel mode): the app starts Fully by its package's launch intent to go back to the dashboard (design section 7). Since
+         Android 11 an app sees another package only if it asks; this names exactly that one. -->
+    <queries>
+        <package android:name="de.ozerov.fully" />
+    </queries>
+
+    <application
+        android:name=".PorticoApp"
+        android:label="Portico"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/Theme.Portico">
+        <!-- PR-C: android:theme above. AppCompatActivity needs an AppCompat theme. -->
+        <!-- PR-J: networkSecurityConfig above permits cleartext (plain http) for the whole app,
+             because the platform rule is static per APK; the app's UrlPolicy allows http only to
+             a private/LAN host (docs/reference/network-policy.md). No android:usesCleartextTraffic: the
+             config supersedes it. -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Home: the cameras and buttons Home Assistant built for this phone. Opened by MainActivity
+             (and back from Setup); not exported. -->
+        <activity
+            android:name=".home.HomeActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:label="@string/home_title"
+            android:theme="@style/Theme.Portico.NoActionBar" />
+
+        <!-- PR-C: Setup (begin). Opened by MainActivity; not exported. -->
+        <activity
+            android:name=".setup.SetupActivity"
+            android:exported="false"
+            android:label="@string/setup_title"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- PR-C: Setup (end) -->
+
+        <!-- PR-C2: the enrollment QR scanner. Opened only by Setup; portrait-locked because its
+             preview transform is scale-only (ScanActivity's doc). -->
+        <activity
+            android:name=".setup.ScanActivity"
+            android:exported="false"
+            android:label="@string/scan_title"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Portico.Scan"
+            tools:ignore="LockedOrientationActivity" />
+
+        <!-- PR-F: ring UI (begin). Not exported: only Portico's own PendingIntents open them
+             (the full-screen intent, the content intent, CallStyle's buttons, the alarm), and a
+             PendingIntent runs with its creator's identity. APP-03: HomeActivity (singleTop; it shows over the
+             lock screen only while a station call lasts, set in code, not here) still takes the call bar's Answer; 0.6.75: the ring's
+             own intents open the call window (RingCallActivity, below). -->
+        <receiver
+            android:name=".ring.RingReceiver"
+            android:exported="false" />
+
+        <!-- 0.6.75: the CALL WINDOW of a door call: the dialer-style full-screen incoming-call window. 0.6.76: the RINGING screen only; Answer
+             (its button or the notification's action) opens HomeActivity with the call and closes it. Both ring paths open it: the notification's full-screen intent (locked / screen off) and DirectRingLauncher
+             (unlocked). Not exported (only Portico's own PendingIntents and its own direct launch). Over the lock screen with the screen
+             turned on, kept out of the recents. singleTask: one window per ring, a second ring or the Answer action arrives in onNewIntent.
+             Its OWN task (taskAffinity): closing it (finishAndRemoveTask) never brings Home forward and leaves no blank task. -->
+        <activity
+            android:name=".ring.RingCallActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.meda.portico.callwindow"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Portico.CallWindow"
+            tools:targetApi="27" />
+
+        <!-- M7 3b-B: the ring screen of a house call. Same rules as the door ring screen: not exported, only Portico's own
+             PendingIntents open it. Nothing can start it while the server has house calls off. -->
+        <activity
+            android:name=".ring.HouseRingActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Portico.Ring"
+            tools:targetApi="27" />
+        <!-- PR-F: ring UI (end) -->
+
+        <!-- Answering (begin). The in-call screen shows over the lock screen like the ring; not
+             exported, no intent filter. singleTop: it follows AnswerCoordinator.state(), never its
+             intent, so a second launch cannot show a stale call. -->
+        <activity
+            android:name=".call.InCallActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Portico.Ring"
+            tools:targetApi="27" />
+
+        <!-- The outgoing-call screen (call buttons): follows PlaceCoordinator.state() the way InCallActivity
+             follows the answer coordinator's, and is opened only by a press of a call button. -->
+        <activity
+            android:name=".call.OutgoingCallActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.Portico.Ring"
+            tools:targetApi="27" />
+
+        <!-- Foreground service (microphone) for the length of an answered call only. stopWithTask
+             false: swiping Portico away from the recents reaches onTaskRemoved, which releases the call. -->
+        <service
+            android:name=".call.CallService"
+            android:exported="false"
+            android:foregroundServiceType="microphone"
+            android:stopWithTask="false" />
+
+        <!-- Stay connected: a quiet foreground service (type connectedDevice) that holds no socket itself; it
+             keeps the process alive so the socket survives the background. Started only from allowed contexts;
+             stopWithTask false so swiping Portico from the recents does not end it. -->
+        <service
+            android:name=".stay.ConnectionService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice"
+            android:stopWithTask="false" />
+
+        <receiver
+            android:name=".call.CallReceiver"
+            android:exported="false" />
+        <!-- Answering (end) -->
+
+        <!-- Pause: the auto-resume alarm and the paused notification's Resume action. Not
+             exported, no intent filter: only Portico's own PendingIntents reach it. -->
+        <receiver
+            android:name=".pause.PauseReceiver"
+            android:exported="false" />
+
+        <!-- PR-E: Firebase messaging (begin). Runtime FirebaseOptions from Settings (spec §5.3,
+             P2 plan §3.1): no google-services.json, no google-services plugin. MergedManifestTest
+             asserts all of this against the merged manifest. -->
+        <service
+            android:name=".fcm.PorticoMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Re-trigger the socket and registration after a reboot or an APK update (an updated
+             app is stopped until something starts it). System broadcasts reach a non-exported
+             receiver. -->
+        <receiver
+            android:name=".boot.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Removed: it would auto-initialise Firebase from resources this app never has. The
+             app initialises the default FirebaseApp itself (fcm/FirebaseBoot). -->
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            tools:node="remove" />
+
+        <!-- No register()/token before the app has options and asks for it. -->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <!-- firebase-messaging 25.1.x: FID registration (register()/onRegistered). Without it
+             register() fails; with it getToken() fails (both verified in 25.1.3's bytecode). -->
+        <meta-data
+            android:name="firebase_messaging_installation_id_enabled"
+            android:value="true" />
+        <!-- The only data-collection flags the resolved Firebase closure reads. -->
+        <meta-data
+            android:name="firebase_data_collection_default_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="delivery_metrics_exported_to_big_query_enabled"
+            android:value="false" />
+        <!-- PR-E: Firebase messaging (end) -->
+
+    </application>
+</manifest>

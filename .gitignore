@@ -1,0 +1,29 @@
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+.kotlin/
+*.apk
+*.aab
+
+# Go
+gocore/*.aar
+gocore/*.jar
+# DEV-557: gocore/bind.sh output (derived, ~15 MB, needs Go + the NDK)
+app/libs/*.aar
+app/libs/*.jar
+
+# Editors / OS
+.vscode/
+.DS_Store
+
+# Release signing (PR-G): keys and their properties stay outside the repo (P2 plan §7 Q1)
+*.jks
+*.keystore
+*.p12
+signing.properties

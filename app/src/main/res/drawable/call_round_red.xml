@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 0.6.75: the call window's Decline / End call button, a round red disc (the dialer's decline). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="#FFDC2626" />
+</shape>

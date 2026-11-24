@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portico themed (monochrome) icon: the same home outline and phone call glyph, one colour. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="3.5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M54,25 L82,50 L74,50 L74,78 L34,78 L34,50 L26,50 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M48.08,58.67 C49.67,61.78 52.22,64.32 55.33,65.92 L57.75,63.5 C58.05,63.2 58.49,63.1 58.87,63.23 C60.11,63.64 61.44,63.86 62.8,63.86 C63.41,63.86 63.9,64.36 63.9,64.96 L63.9,68.8 C63.9,69.41 63.41,69.9 62.8,69.9 C52.47,69.9 44.1,61.53 44.1,51.2 C44.1,50.59 44.59,50.1 45.2,50.1 L49.05,50.1 C49.66,50.1 50.15,50.59 50.15,51.2 C50.15,52.57 50.37,53.89 50.78,55.13 C50.9,55.51 50.81,55.94 50.5,56.25 L48.08,58.67 Z" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2" android:strokeLineCap="round" android:pathData="M56.2,54.5 A3.3,3.3 0 0 1 59.5,57.8 M56.2,51.2 A6.6,6.6 0 0 1 62.8,57.8" />
+</vector>

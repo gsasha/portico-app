@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 0.6.75: the call window's background -->
+    <color name="call_window_bg">#FF0B1118</color>
+    <!-- 0.6.50: the Home header bar is a slightly different surface from the page (a Material-style tonal shift, surface-variant-like). -->
+    <color name="home_header_bg">#FFECEFF3</color>
+    <!-- 0.6.64: ChoiceStrip (Settings toggle strips) -->
+    <color name="choice_on_bg">#FF1F6FEB</color>
+    <color name="choice_on_text">#FFFFFFFF</color>
+    <color name="choice_off_bg">#00000000</color>
+    <color name="choice_off_text">#FF202124</color>
+    <color name="choice_stroke">#FF8A8F98</color>
+    <color name="choice_off_bg_disabled">#00000000</color>
+    <color name="choice_stroke_disabled">#FFB0B4BA</color>
+    <!-- 0.6.69: status dots -->
+    <color name="dot_green">#FF2E9E5B</color>
+    <color name="dot_amber">#FFE0A100</color>
+    <color name="dot_red">#FFD93025</color>
+    <color name="dot_grey">#FF8A8F98</color>
+    <!-- DEV-807: the Panel mode microphone banner (a dark red with white text: readable across a kitchen). -->
+    <color name="panel_mic_banner_bg">#B71C1C</color>
+    <color name="panel_mic_banner_text">#FFFFFF</color>
+</resources>

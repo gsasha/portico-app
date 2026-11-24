@@ -1,0 +1,572 @@
+<resources>
+    <string name="app_name">Portico</string>
+
+    <!-- PR-C: Setup screen (begin) -->
+    <string name="setup_title">Portico settings</string>
+    <!-- APP-04: the Status half of the old settings screen. Headings and the entry button only. -->
+    <string name="status_title">Portico status</string>
+    <!-- 0.6.58: Settings keeps its texts short. Per network class: a connection row and a video row; then Ring control. -->
+    <string name="setup_net_wifi">On Wi-Fi</string>
+    <string name="setup_net_mobile">On mobile</string>
+    <string name="setup_net_roaming">On roaming</string>
+    <string name="conn_stay">Stay connected</string>
+    <string name="conn_push">Push notification</string>
+    <string name="video_live_big">Big video</string>
+    <string name="video_live_small">Small video</string>
+    <string name="video_stills">Stills</string>
+    <string name="video_off">Off</string>
+    <string name="setup_ring_control">Ring control (Android)</string>
+    <!-- 0.6.69: every button that opens an Android system page lives here; Status lines point at it. -->
+    <string name="setup_android_overlay">Over other apps</string>
+    <string name="setup_android_settings">Android settings</string>
+    <string name="setup_android_app">App settings</string>
+    <string name="setup_android_notifications">Notifications</string>
+    <string name="setup_android_calls">Full-screen calls</string>
+    <string name="setup_android_status_channel">Status notification</string>
+    <string name="setup_enrollment_label">Enrollment from Home Assistant</string>
+    <string name="setup_enrollment_hint">Paste the enrollment text</string>
+    <string name="setup_save">Save</string>
+    <string name="setup_saved">Saved.</string>
+    <string name="setup_save_failed">Could not write the secure settings store. Nothing was saved.</string>
+    <string name="setup_loading">Opening the secure settings store…</string>
+    <string name="setup_storage_unavailable">The secure settings store could not be opened on this phone, so Portico cannot save anything. Clearing the app\'s storage resets it.</string>
+    <!-- PR-C: Setup screen (end) -->
+    <!-- PR-F: ring and status notifications (begin). Every one takes the door name as %1$s. -->
+    <string name="channel_ring_name">Door calls</string>
+    <string name="channel_ring_description">Rings when somebody is at a door</string>
+    <string name="channel_status_name">Call status</string>
+    <string name="channel_status_description">Answered elsewhere, missed calls and test pushes. Never rings.</string>
+    <string name="ring_door_generic">Door</string>
+    <string name="ring_title">%1$s is ringing</string>
+    <string name="ring_text">Tap Answer to talk</string>
+    <string name="ring_action_open">Open</string>
+    <string name="ring_action_stop">Stop ringing</string>
+    <string name="answered_title">%1$s: answered elsewhere</string>
+    <string name="answered_text">Someone else took the call.</string>
+    <string name="missed_title">Missed call: %1$s</string>
+    <string name="missed_text">Nobody answered the door call on this phone.</string>
+    <string name="test_title">Portico push ring notification works</string>
+    <string name="test_text">A test push from Home Assistant reached this phone. A test never rings.</string>
+    <!-- PR-F: ring and status notifications (end) -->
+
+    <!-- PR-F: ring screen (begin) -->
+    <string name="ring_screen_title">%1$s is ringing</string>
+    <string name="ring_state_ringing">Ringing on this phone</string>
+    <string name="ring_state_answered">Answered elsewhere</string>
+    <string name="ring_state_ended">The call has ended</string>
+    <string name="ring_state_stopped">Not ringing on this phone any more</string>
+    <string name="ring_answer">Answer</string>
+    <string name="ring_stop">Stop ringing on this phone</string>
+    <string name="ring_close">Close</string>
+    <string name="ring_explain">Answer talks to the visitor through your phone. Opening the door happens in the intercom app or on the panel in the house. Stopping the ring here does not end the call for anybody else.</string>
+    <string name="ring_explain_ring_only">The front door only rings. Answer in the Intercom app. Stopping the ring here does not end it for anybody else.</string>
+    <string name="ring_explain_with_buttons">Answer talks to the visitor through your phone. Stopping the ring here does not end the call for anybody else.</string>
+    <!-- PR-F: ring screen (end) -->
+    <!-- PR-F: Setup status (begin) -->
+    <string name="setup_ha_heading">Home Assistant</string>
+    <!-- 0.6.70: the plain label: value rows of the Status screen (the merged "This phone" facts) -->
+    <string name="fact_address">Address</string>
+    <string name="fact_tailnet_dial">Tailnet dial</string>
+    <string name="fact_sign_in">Signed in</string>
+    <string name="fact_sign_in_token">access token</string>
+    <string name="fact_sign_in_renews">renews itself</string>
+    <string name="fact_phone_name">Phone name</string>
+    <string name="fact_enrolment">Enrolment</string>
+    <string name="fact_enrolment_finishing">finishing</string>
+    <string name="fact_version">App version</string>
+    <string name="fact_version_value">%1$s (code %2$s)</string>
+    <string name="fact_firebase">Firebase project</string>
+    <string name="dot_ok">OK</string>
+    <string name="dot_attention">Needs attention</string>
+    <string name="dot_problem">Problem</string>
+    <string name="dot_off">Off</string>
+    <string name="setup_push_heading">Push ring notification</string>
+    <string name="st_notifications_ok">Notifications allowed</string>
+    <string name="st_notifications_not_asked">Notifications not asked yet: door calls cannot ring.</string>
+    <string name="st_notifications_denied">Notifications refused: door calls cannot ring.</string>
+    <string name="st_notifications_denied_permanent">Notifications refused: door calls cannot ring. Settings &gt; Android settings.</string>
+    <string name="st_notifications_off">Notifications switched off: door calls cannot ring. Settings &gt; Android settings.</string>
+    <string name="st_ring_channel_lowered">\"Door calls\" is below urgent: calls show quietly. Settings &gt; Ring control (Android).</string>
+    <string name="st_ring_channel_blocked">\"Door calls\" is switched off: no ring. Settings &gt; Ring control (Android).</string>
+    <string name="st_status_channel_blocked">\"Call status\" is switched off: missed calls hidden. Settings &gt; Android settings.</string>
+    <string name="st_full_screen_ok">Calls over the lock screen allowed</string>
+    <string name="st_full_screen_denied">No call over the lock screen, only a notification. Settings &gt; Android settings.</string>
+    <string name="st_full_screen_not_a_question">Calls over the lock screen allowed</string>
+    <string name="st_dnd_on">Do Not Disturb is on: house calls are silenced; door calls follow the \"Door calls\" override.</string>
+    <string name="st_ring_bypass_dnd">Door calls ring through Do Not Disturb</string>
+    <string name="st_ring_no_bypass_dnd">Door calls may be silent in Do Not Disturb. Settings &gt; Ring control (Android).</string>
+    <string name="st_background_restricted">Android restricts Portico in the background: calls may fail. Settings &gt; Android settings.</string>
+    <string name="st_battery_optimised">Battery optimisation is on; usually fine. If rings are late: Settings &gt; Android settings.</string>
+    <string name="st_link_connected">Connected to Home Assistant</string>
+    <string name="st_link_connecting">Connecting to Home Assistant…</string>
+    <string name="st_link_retrying">Home Assistant unreachable; retrying</string>
+    <string name="st_link_auth_rejected">Home Assistant refused this phone\'s token. Paste a new enrollment below.</string>
+    <string name="st_link_signed_out">This phone was signed out. Enroll it again: scan a new QR code below.</string>
+    <string name="st_link_not_enrolled">Not enrolled: paste the enrollment from Home Assistant below.</string>
+    <string name="st_link_stopped">Connection to Home Assistant stopped</string>
+    <!-- PR-J: the network URL policy (core UrlPolicy). The first is shown both under the
+         configured host and as a status line, for as long as the stored address is plain http. -->
+    <string name="setup_url_plain_http">Plain http (unencrypted) on your own network</string>
+    <!-- Stay connected (2026-10-15): the Settings switch and the connection service's quiet notification. -->
+    <string name="channel_connection_name">Connection</string>
+    <string name="channel_connection_description">Shown while Portico stays connected in the background. Never makes a sound.</string>
+    <string name="stay_note_title">Portico</string>
+    <string name="stay_note_home_fallback">Portico</string>
+    <string name="stay_note_connected">Connected to %1$s</string>
+    <string name="stay_note_connecting">Connecting to %1$s…</string>
+    <string name="stay_note_waiting_wifi">Waiting for Wi-Fi</string>
+    <string name="stay_note_push_only">Push notifications only</string>
+    <string name="channel_paused_name">Paused</string>
+    <string name="channel_paused_description">Shown while Portico is paused and will not ring. Never makes a sound.</string>
+    <string name="pause_heading">Pause this phone</string>
+    <string name="pause_hint">No connection and no ring while paused.</string>
+    <string name="pause_1h">Pause for 1 hour</string>
+    <string name="pause_4h">Pause for 4 hours</string>
+    <string name="pause_until_resumed">Pause until I resume</string>
+    <string name="pause_resume">Resume</string>
+    <string name="pause_failed">Could not save the pause on this phone; Portico keeps running.</string>
+    <string name="pause_notification_title">Portico is paused</string>
+    <string name="pause_notification_text_until">It will not ring until %1$s. Resume</string>
+    <string name="pause_notification_text_resumed">It will not ring until you resume. Resume</string>
+    <string name="st_link_paused">Paused on purpose: no connection, pushes dropped, until you resume.</string>
+    <string name="st_push_paused">Paused: pushes dropped until you resume.</string>
+    <string name="st_tailnet_paused">Paused: tailnet asleep until you resume.</string>
+    <string name="st_paused_until">Paused until %1$s. This phone will not ring for Portico until then.</string>
+    <string name="st_paused_until_resumed">Paused until you resume. This phone will not ring for Portico.</string>
+    <string name="st_link_url_refused">Not connecting: stored address not allowed. Enroll again with https.</string>
+    <string name="st_url_refused">Address not allowed, not connecting: %1$s. Enroll again with https.</string>
+    <string name="st_push_no_firebase">Push not set up. Add Firebase in the Portico integration, then scan its QR again.</string>
+    <string name="st_push_firebase_failed">Firebase did not start (%1$s): push is off.</string>
+    <string name="st_push_restart">New Firebase config saved. Close Portico and open it again.</string>
+    <string name="st_push_waiting_for_firebase">Waiting for Firebase to register this phone</string>
+    <string name="st_push_registering">Registering with Home Assistant…</string>
+    <string name="st_push_off_in_ha">Registered; push is off for this phone in Home Assistant (Portico &gt; Configure &gt; Phones). Normal at first.</string>
+    <string name="st_push_on">Push on for this phone</string>
+    <string name="st_push_on_last_ok">Push on; last delivered %1$s</string>
+    <string name="st_push_refused">Home Assistant refused the registration: %1$s</string>
+    <string name="st_push_server_without_push">No push set up in this Home Assistant: calls ring only while connected.</string>
+    <string name="st_push_retry">Registration not finished (%1$s); retried on the next connection.</string>
+    <string name="st_push_off_local">Push switched off on this phone</string>
+    <string name="st_push_signed_out">Signed out: push is off</string>
+    <string name="st_push_server_state">Home Assistant says registration is \"%1$s\". Re-enroll the phone.</string>
+    <string name="st_ring_switch_off">\"Ring for door calls on this phone\" is off: calls are recorded, never ring.</string>
+    <string name="fix_request_notifications">Allow notifications</string>
+    <string name="fix_open_app_details">Open Portico\'s app settings</string>
+    <string name="fix_restart">Close Portico (open it again to apply)</string>
+    <string name="fix_no_settings_screen">This phone has no settings screen for that. Look under Settings, Apps, Portico.</string>
+    <!-- PR-F: Setup status (end) -->
+    <!-- PR-G: a refused CallStyle is visible, not only logged. %1$s is an exception class name. -->
+    <string name="st_call_style_refused">Incoming-call style refused (%1$s); a plain notification is used. It still rings.</string>
+    <!-- PR-C2: scan the enrollment QR (begin) -->
+    <string name="setup_scan">Scan the QR code</string>
+    <string name="setup_scan_or_paste">Scan the QR code from Home Assistant, or paste its text.</string>
+    <string name="setup_scan_saved">Scanned and saved.</string>
+    <!-- DEV-544: a one-time-code QR is saved, then redeemed in the background. -->
+    <string name="setup_code_saved">Scanned. Signing this phone in to Home Assistant…</string>
+    <string name="enroll_redeeming">Signing this phone in to Home Assistant…</string>
+    <string name="enroll_retrying">%1$s Trying again.</string>
+    <string name="enroll_done">Signed in. This phone now logs in with a key that renews itself every day.</string>
+    <string name="scan_camera_why_title">Use the camera?</string>
+    <string name="scan_camera_why">Portico uses the camera only to read the enrollment QR code, and only while the scanner is open. Nothing is recorded or kept. If you would rather not allow it, paste the enrollment text instead.</string>
+    <string name="scan_camera_continue">Continue</string>
+    <string name="scan_camera_not_now">Not now</string>
+    <string name="scan_denied">The camera was not allowed, so Portico cannot scan. Paste the enrollment text into the field above, or tap \"Scan the QR code\" to be asked again.</string>
+    <string name="scan_denied_permanently">The camera is blocked for Portico, so it cannot scan. Allow the camera in Portico\'s app settings, or paste the enrollment text into the field above.</string>
+    <string name="scan_no_camera">This device has no camera. Paste the enrollment text into the field above instead.</string>
+    <string name="scan_camera_failed">The camera could not be used. Try again, or paste the enrollment text into the field above.</string>
+    <string name="scan_lost">The scanned code was lost before it could be checked. Scan it again.</string>
+    <string name="scan_empty_code">That QR code is empty. Scan the enrollment QR code from Home Assistant.</string>
+    <string name="scan_title">Scan the enrollment QR code</string>
+    <string name="scan_aim">Point at the enrollment QR code in\nHome Assistant: Portico, Configure</string>
+    <string name="scan_starting">Starting the camera…</string>
+    <string name="scan_searching">Looking for a QR code…</string>
+    <string name="scan_checked_note">Checked before anything is saved.</string>
+    <string name="scan_cancel">Cancel</string>
+    <!-- PR-C2: scan the enrollment QR (end) -->
+
+    <!-- Offline registration (2026-10-07): shown only when this phone cannot reach Home Assistant. -->
+    <string name="offline_reg_cannot_reach">This phone cannot reach Home Assistant, so it cannot register itself. If Home Assistant is only reachable from your home network, connect to it, for example on your Wi-Fi, and Portico will register by itself.</string>
+    <string name="offline_reg_copy_instructions">Otherwise copy the registration string below and paste it in Home Assistant: Portico &gt; Push ring notification &gt; Configure &gt; Add a phone\'s registration.</string>
+    <string name="offline_reg_scan_again">Scan the QR again from Home Assistant to get a registration string.</string>
+    <string name="offline_reg_copy">Copy registration string</string>
+    <string name="offline_reg_copied">Copied. Paste it in Home Assistant.</string>
+    <string name="offline_reg_copy_failed">This phone did not allow copying. Try again.</string>
+    <string name="offline_reg_clip_label">Portico registration string</string>
+    <!-- DEV-557: the tailnet client (begin). Shown under "Home Assistant and the push ring notification". -->
+    <string name="st_link_path_direct">Connected to Home Assistant, directly</string>
+    <string name="st_link_path_tailnet">Connected to Home Assistant, through the tailnet</string>
+    <string name="st_tailnet_not_built">No tailnet client in this APK; away from home only the address works.</string>
+    <string name="st_tailnet_not_set_up">No tailnet: the enrollment had no Tailscale key; away from home only the address works.</string>
+    <string name="st_tailnet_ready">Joined the tailnet; used only when the address does not answer.</string>
+    <string name="st_tailnet_key_pending">Tailscale key waiting; joins at the next connect.</string>
+    <string name="st_tailnet_joining">Joining the tailnet…</string>
+    <string name="st_tailnet_needs_approval">Waiting for approval in the Tailscale admin console.</string>
+    <string name="st_tailnet_up">On the tailnet as %1$s</string>
+    <string name="st_tailnet_key_rejected">Tailscale key refused (used, expired or revoked). Scan a new QR.</string>
+    <string name="st_tailnet_needs_login">The tailnet no longer knows this phone. Scan a new QR.</string>
+    <string name="st_tailnet_timeout">Tailnet not reached in time; retried at the next connect.</string>
+    <string name="st_tailnet_library_failed">Tailnet client could not start: %1$s</string>
+    <string name="st_tailnet_error">Tailnet client failed: %1$s</string>
+    <string name="st_tailnet_no_target">No address to reach Home Assistant by tailnet. Scan the QR again.</string>
+    <string name="st_tailnet_key_expired">Tailscale key in the QR expired. Scan a new QR.</string>
+    <!-- Why each path did or did not open (Setup, "Home Assistant and the push ring notification"). %1$s is "2 s ago"; %2$s is a why_* reason. -->
+    <string name="st_path_direct_opened">Direct path opened %1$s</string>
+    <string name="st_path_direct_failed">Direct path, %1$s: %2$s</string>
+    <string name="st_path_tailnet_opened">Tailnet path opened %1$s</string>
+    <string name="st_path_tailnet_failed">Tailnet path, %1$s: %2$s</string>
+    <string name="st_path_tailnet_not_built">Tailnet path: not tried, because this APK has no tailnet client.</string>
+    <string name="st_route_via">Tailnet route to %1$s: via %2$s.</string>
+    <string name="st_route_none">No tailnet route to %1$s (%2$s peers visible). Approve the subnet route in Tailscale.</string>
+    <!-- DEV-694 P0: where the time of the last connect went. %1$s is "direct failed +120 ms, library loaded +1.9 s, node up +4.3 s". -->
+    <string name="st_connect_timeline">Last connect: %1$s.</string>
+    <string name="st_route_unknown">Tailnet route to %1$s: peers not known yet.</string>
+    <string name="why_name_not_resolved">the name did not resolve on this network.</string>
+    <string name="why_refused">the connection was refused (nothing listens on that port).</string>
+    <string name="why_timed_out">no answer in time.</string>
+    <string name="why_unreachable">this network has no route to that address.</string>
+    <string name="why_tls">the secure (TLS) connection failed.</string>
+    <string name="why_certificate">the server\'s certificate is not trusted by this phone.</string>
+    <string name="why_hostname">the server\'s certificate does not match the address\'s host name.</string>
+    <string name="why_http_status">the server answered with HTTP %1$s instead of opening the connection.</string>
+    <string name="why_auth_rejected">connected, but Home Assistant refused this phone\'s access token.</string>
+    <string name="why_contract_mismatch">this Home Assistant runs a different Portico version than this app needs (contract 3); retrying.</string>
+    <string name="why_contract_mismatch_at">this Home Assistant runs a different Portico version (server contract %1$s, this app needs 3); retrying.</string>
+    <string name="why_closed_early">the connection closed before it opened, with no reason given.</string>
+    <string name="why_tailnet_not_up">the tailnet was not up yet.</string>
+    <string name="why_tailnet_no_such_host">the target is a host name the tailnet cannot resolve: the QR has no ha_dial.</string>
+    <string name="why_tailnet_refused">the target refused the connection (nothing listens on that port).</string>
+    <string name="why_no_route">no route to the target through the tailnet.</string>
+    <string name="why_dial_timeout">the dial through the tailnet timed out: a policy rule blocks it, or no peer routes it.</string>
+    <string name="why_forwarder_token">the local forwarder refused the connection\'s token.</string>
+    <string name="why_forwarder_down">the local forwarder was not listening.</string>
+    <!-- %1$s is the address and port tried, e.g. 127.0.0.1:41234 (not secret). -->
+    <string name="why_forwarder_down_at">the local forwarder was not listening at %1$s.</string>
+    <string name="why_superseded">not needed: the other path opened first.</string>
+    <string name="why_other">it failed for another reason.</string>
+    <!-- DEV-557: the tailnet client (end) -->
+
+    <!-- Home (2026-10-12): what Home Assistant built for this phone, besides a call. -->
+    <string name="home_title">Portico</string>
+    <string name="home_status_description">Connection status. Tap for details in Status.</string>
+    <string name="home_status_direct">LAN</string>
+    <string name="home_status_tailnet">Tailscale</string>
+    <string name="home_status_connected">connected</string>
+    <string name="home_status_connecting">connecting</string>
+    <string name="home_status_offline">offline</string>
+    <string name="home_status_reconnecting">HA reconnecting</string>
+    <string name="home_status_not_set_up">not set up</string>
+    <string name="home_status_token_refused">token refused</string>
+    <string name="home_status_address_refused">bad address</string>
+    <string name="home_status_paused">paused</string>
+    <string name="home_status_signed_out">signed out</string>
+    <string name="home_title_paused_until">\u23F8 PAUSED until %1$s</string>
+    <string name="home_title_paused_resumed">\u23F8 PAUSED until you resume</string>
+    <string name="home_menu_settings">Settings</string>
+    <string name="home_menu_status">Status</string>
+    <string name="home_menu_about">About</string>
+    <!-- DEV-705: the connection log (Settings). -->
+    <string name="share_diagnostics">Send diagnostics</string>
+    <string name="connlog_heading">Connection log</string>
+    <string name="connlog_switch">Send diagnostics to Home Assistant</string>
+    <string name="connlog_hint">One short report per connection, sent only to your Home Assistant. No names, addresses or keys.</string>
+    <string name="home_menu_description">Menu: refresh, settings, status, about</string>
+    <!-- A camera tile on Home (TalkBack): the description is read first, the double tap's job after "Double tap to". %1$s is the camera's label. -->
+    <string name="home_tile_unnamed">Camera</string>
+    <string name="home_tile_desc_big">%1$s, big</string>
+    <string name="home_tile_desc_small">%1$s, small</string>
+    <string name="home_tile_desc_zoomed">%1$s, zoomed</string>
+    <string name="home_tile_desc_fullscreen">%1$s, fullscreen</string>
+    <string name="home_tile_action_controls">Show camera controls</string>
+    <string name="home_tile_action_resize">Resize: %1$s</string>
+    <string name="home_tile_action_stream">Video size: %1$s</string>
+    <string name="home_strip_resize">Resize</string>
+    <string name="home_strip_settings">Video size</string>
+    <string name="home_resize_big">Big</string>
+    <string name="home_resize_small">Small</string>
+    <string name="home_resize_partial">Partial</string>
+    <string name="home_resize_fullscreen">Fullscreen</string>
+    <string name="home_exit_fullscreen_button">Exit full screen</string>
+    <string name="home_resize_exit">Exit fullscreen</string>
+    <string name="home_stream_title">Video size</string>
+    <string name="home_stream_auto">Auto (%1$s)</string>
+    <string name="home_stream_auto_plain">Auto</string>
+    <!-- 0.6.53: the video-size menu is a text list named by resolution ("1080p"); these words are the fallback until a stream's height has been seen -->
+    <string name="home_stream_high">High</string>
+    <string name="home_stream_low">Low</string>
+    <string name="home_stream_desc">Video quality %1$s</string>
+    <string name="home_stream_stills">Stills</string>
+    <string name="home_stream_off">Off</string>
+    <string name="home_picture_off">Off. Tap, then the gear, to turn it on</string>
+    <string name="home_tile_hint_reset_zoom">Reset zoom</string>
+    <string name="home_tile_action_zoom_in">Zoom in</string>
+    <string name="home_tile_action_zoom_out">Zoom out</string>
+    <string name="home_tile_action_reset_zoom">Reset zoom</string>
+    <!-- About (opened from the menu). %1$s is the version name, %2$s the version code. -->
+    <string name="about_title">About Portico</string>
+    <string name="about_home">Home: %1$s</string>
+    <string name="about_version">Version %1$s (code %2$s)</string>
+    <string name="about_build_debug">Build: debug</string>
+    <string name="about_build_release">Build: release</string>
+    <string name="about_tailnet_yes">Tailnet client: built in</string>
+    <string name="about_tailnet_no">Tailnet client: not built into this APK</string>
+    <string name="about_icons">Button icons: Material Design Icons by Pictogrammers (Apache License 2.0).</string>
+    <string name="about_ok">OK</string>
+    <string name="home_no_blocks">Nothing on this page yet.</string>
+
+    <string name="home_banner_not_configured">Portico is not set up yet. Open Settings and scan the QR code from Home Assistant.</string>
+    <string name="home_banner_paused">Paused. Resume in Settings to see the cameras and use the buttons.</string>
+    <string name="home_banner_auth_rejected">Home Assistant refused this phone\'s access. Open Settings and scan the QR code again.</string>
+    <string name="home_banner_signed_out">This phone was signed out of Home Assistant. Enroll it again: open Settings and scan a new QR code.</string>
+    <string name="home_banner_url_refused">The Home Assistant address is not allowed. Open Settings.</string>
+    <string name="home_banner_offline">Not connected to Home Assistant. This is what was saved; the buttons are off until it connects.</string>
+    <string name="home_banner_connecting">Connecting to Home Assistant…</string>
+    <string name="home_banner_no_server_support">This Home Assistant\'s Portico is too old to send cameras and buttons. Update it in Home Assistant.</string>
+    <string name="home_banner_not_enrolled">Home Assistant does not know this phone as a Portico phone. Enroll it again in Home Assistant.</string>
+    <string name="home_banner_no_content">Nothing to show yet. In Home Assistant open Portico in the sidebar and add cameras and buttons for this phone.</string>
+
+    <string name="home_picture_loading">Loading…</string>
+    <string name="home_picture_unavailable">Camera unavailable</string>
+    <string name="home_picture_offline">No connection</string>
+    <string name="home_unavailable">unavailable</string>
+    <string name="home_asks_first">asks first</string>
+    <string name="home_running">running…</string>
+
+    <string name="home_kind_portico_open">Door relay</string>
+    <string name="home_kind_lock_open">Lock</string>
+    <string name="home_kind_button_press">Button</string>
+    <string name="home_kind_script_run">Script</string>
+    <string name="home_kind_scene_activate">Scene</string>
+    <string name="home_kind_call">Call</string>
+    <string name="home_kind_lock_lock">Lock the lock</string>
+    <string name="home_kind_lock_unlock">Unlock the lock</string>
+    <string name="home_kind_cover_open">Open a gate or garage</string>
+    <string name="home_kind_cover_close">Close a gate or garage</string>
+    <string name="home_kind_talk">Talk to the door</string>
+    <!-- Why a Talk button is off, from the server's reason (no arguments). -->
+    <string name="home_reason_talk_off">Talk to the door is switched off</string>
+    <string name="home_reason_no_door">Door removed</string>
+    <string name="home_reason_not_connected">The gate is not connected</string>
+    <string name="home_reason_busy">The gate is busy</string>
+    <string name="home_reason_phone_only">Talk works from a phone only</string>
+    <string name="home_reason_connecting">A call from this phone is still connecting</string>
+    <string name="home_reason_in_call">A call from this phone is still going</string>
+    <!-- A Talk button while this phone's talk is under way, and for TalkBack (no arguments). -->
+    <string name="home_talk_connecting">Connecting to the gate. Tap to cancel.</string>
+    <string name="home_talk_in_call">In call. Tap to stop.</string>
+    <string name="home_talk_ringing">Calling you. Answer or decline below.</string>
+    <string name="home_talk_state_ringing">Calling you</string>
+    <string name="home_talk_state_ready">Ready</string>
+    <string name="home_talk_state_connecting">Connecting to the gate</string>
+    <string name="home_talk_state_in_call">In call</string>
+    <string name="home_talk_action_cancel">Cancel</string>
+    <string name="home_talk_action_stop">Stop</string>
+    <!-- Call buttons that are off or live (no arguments: the name is the button's own detail line). -->
+    <string name="home_call_live">calling…</string>
+    <string name="home_call_offline">not reachable</string>
+    <string name="home_call_busy">on a call</string>
+    <string name="home_call_dnd">Do Not Disturb is on</string>
+    <string name="home_call_receive_off">calls switched off</string>
+    <string name="home_call_gone">not available any more</string>
+    <string name="home_call_not_available">this Home Assistant cannot place calls yet</string>
+
+    <string name="home_hold_hint">Hold to confirm</string>
+    <string name="home_hold_action">Confirm and run</string>
+    <string name="home_hold_description">%1$s. Hold to confirm</string>
+
+    <string name="home_confirm_title">%1$s?</string>
+    <string name="home_confirm_message">Run “%1$s” now?</string>
+    <string name="home_confirm_yes">Yes</string>
+    <string name="home_confirm_no">Cancel</string>
+
+    <string name="home_run_ok">“%1$s”: done.</string>
+    <string name="home_run_not_connected">“%1$s”: not connected, nothing was sent.</string>
+    <string name="home_run_rate_limited">“%1$s” ran a moment ago. Wait a moment.</string>
+    <string name="home_run_unavailable">“%1$s”: that is unavailable right now.</string>
+    <string name="home_run_not_allowed">“%1$s”: Home Assistant does not allow this phone to do that.</string>
+    <string name="home_run_failed">“%1$s”: Home Assistant could not run it.</string>
+    <string name="ring_unlock_needed">Unlock the phone to use this button.</string>
+    <string name="home_run_paused">Paused: nothing was sent.</string>
+
+    <!-- Answering a door call: the in-call screen and its notification -->
+    <string name="channel_call_name">Call in progress</string>
+    <string name="channel_call_description">Shown while you are talking to somebody at a door</string>
+    <string name="call_title">%1$s</string>
+    <string name="call_status_connecting">Connecting…</string>
+    <string name="call_status_need_mic">Allow the microphone so you can talk.</string>
+    <string name="call_status_in_call">On a call</string>
+    <string name="call_status_muted">On a call (microphone off)</string>
+    <string name="call_ended_user">Call ended</string>
+    <string name="call_ended_remote">The call has ended</string>
+    <string name="call_ended_network">The call was cut off: the connection was lost.</string>
+    <string name="call_ended_cap">The call reached its 5 minute limit and was ended.</string>
+    <string name="call_ended_stopped">Portico stopped, so the call ended.</string>
+    <string name="call_ended_failed">The call could not be answered</string>
+    <string name="call_out_placing">Calling…</string>
+    <string name="call_out_ringing">Ringing %1$s…</string>
+    <string name="call_out_failed">The call could not be placed</string>
+    <string name="call_out_notif_title">Calling %1$s</string>
+    <string name="call_hangup">Hang up</string>
+    <string name="panel_heading">Panel mode</string>
+    <string name="panel_row_on">Panel mode is on: Home Assistant made this device a panel, so it rings like a wall panel. Change it in the Portico editor, Devices tab.</string>
+    <string name="panel_locked">Locked while Panel mode is on: Stay connected and enrolment. Press and hold here to unlock them until you leave this screen.</string>
+    <string name="panel_confirm_unlock_title">Unlock these settings?</string>
+    <string name="panel_confirm_unlock">Changing Stay connected or the enrolment can silence this panel.</string>
+    <string name="panel_confirm_yes">Yes, change it</string>
+    <string name="panel_confirm_no">Cancel</string>
+    <string name="panel_mic_open">Microphone is open</string>
+    <string name="panel_mic_muted">Microphone is muted</string>
+    <string name="panel_close">Close</string>
+    <string name="panel_close_description">Close Portico and go back to the dashboard</string>
+    <string name="panel_return_bar">Back to the dashboard in %1$d s. Touch the screen to stay.</string>
+    <string name="panel_ring_ended">The call has ended</string>
+    <string name="panel_idle_row">Back to the dashboard after %1$d min without a touch. Tap to change.</string>
+    <string name="call_cancel">Cancel</string>
+    <!-- APP-02: the audio route chooser (replaces the Auto/Speaker/Earpiece key), and the call bar. -->
+    <string name="route_speaker">Speaker</string>
+    <string name="route_bluetooth">Bluetooth</string>
+    <string name="route_phone">Phone</string>
+    <string name="route_state_on">Selected</string>
+    <string name="route_state_off">Not selected</string>
+    <string name="callbar_calling">Calling %1$s</string>
+    <string name="callbar_calling_nameless">Calling</string>
+    <string name="callbar_end">End call</string>
+    <string name="callbar_incoming">%1$s is calling</string>
+    <string name="callbar_incoming_nameless">Incoming call</string>
+    <string name="callbar_incoming_hint">Answer or decline</string>
+    <string name="callbar_incoming_ring_only">Answer in the Intercom app. Declining only stops the ring on this phone.</string>
+    <string name="callbar_answer">Answer</string>
+    <string name="callbar_decline">Decline</string>
+    <string name="callbar_description">Call in progress</string>
+    <string name="call_notif_stop">Stop</string>
+    <string name="call_notif_in_progress">Call in progress</string>
+    <string name="call_notif_connecting">Connecting…</string>
+    <string name="audio_volume_label">Call volume %1$d of %2$d</string>
+    <string name="audio_volume_down">Call volume down</string>
+    <string name="audio_volume_up">Call volume up</string>
+    <string name="audio_minus">-</string>
+    <string name="audio_plus">+</string>
+    <string name="call_mute">Turn microphone off</string>
+    <string name="call_unmute">Turn microphone on</string>
+    <string name="call_retry">Try again</string>
+    <string name="call_close">Close</string>
+    <string name="call_open_settings">Open app settings</string>
+    <string name="call_timer">%1$02d:%2$02d</string>
+    <string name="call_notif_title">On a call with %1$s</string>
+    <string name="call_notif_text">Tap to open the call</string>
+
+    <!-- M7 H2: hold and switch between two door calls (built, gated off by HoldConfig.HOLD_ENABLED). Door names and clocks come
+         from core's HoldText; these are the fixed labels. -->
+    <string name="ring_text_both_busy">Both of your calls are in use.</string>
+    <string name="ring_decline">Decline</string>
+    <string name="ring_hold_answer_default">Hold the first call and answer</string>
+    <string name="call_switch">Switch</string>
+    <string name="call_end_held">End held call</string>
+    <string name="call_held_strip_default">A call is on hold</string>
+
+    <!-- M7 3b-B: a house ring, answering it, and the two per-phone switches (shown in Setup only when house calls are on). -->
+    <string name="house_someone">Someone</string>
+    <string name="house_ring_title">%1$s is calling</string>
+    <string name="house_ring_text">Tap Answer to talk</string>
+    <string name="house_ring_state">House call</string>
+    <string name="house_ring_explain">Answer talks to them through your phone. Decline tells the house you will not answer; anyone else who is being called keeps ringing.</string>
+    <string name="call_out_answering">Answering…</string>
+    <!-- DEV-811 P2: call audio quality and path. -->
+    <string name="setup_callaudio_heading">Call audio</string>
+    <string name="setup_callaudio_quality_wideband">Wideband</string>
+    <string name="setup_callaudio_quality_compat">Compatibility</string>
+    <string name="setup_linkrace_heading">Reconnect while ringing</string>
+    <string name="setup_linkrace_on">Make before break</string>
+    <string name="setup_linkrace_off">Classic</string>
+    <string name="setup_answer_nolock_heading">Answer without unlocking</string>
+    <string name="setup_answer_nolock_on">On</string>
+    <string name="setup_answer_nolock_off">Off</string>
+    <string name="setup_answer_nolock_hint">On: answering a door call from the lock screen connects it at once; you can talk and listen, and the screen stays locked. Opening a door, a gate or a lock still asks for your unlock. Off: Answer asks for your unlock first.</string>
+    <string name="setup_unlock_answer_heading">Unlock when answering</string>
+    <string name="setup_unlock_answer_on">On</string>
+    <string name="setup_unlock_answer_off">Off</string>
+    <string name="setup_unlock_answer_hint">On: after you answer from the lock screen, the phone asks to unlock once, so a recognised face unlocks it and a fingerprint prompt unlocks on touch. The call never waits for it and you can cancel it. Off: the call stays on the call screen until you press Unlock. A door, gate or lock button still asks you to confirm while the phone is locked.</string>
+    <string name="call_unlock">Unlock</string>
+    <string name="call_unlock_hint">Unlock the phone to open the full app. The call keeps going.</string>
+    <string name="bio_title">Confirm it is you</string>
+    <string name="bio_subtitle">%1$s. The phone stays locked.</string>
+    <string name="call_bio_error">Could not confirm. The door was not opened.</string>
+    <string name="bio_cancel">Cancel</string>
+    <string name="setup_linkrace_hint">On mobile data or the tailnet, a silent connection to Home Assistant is kept while a second one is opened beside it, and the first that works is used. Classic drops the silent one and reconnects, as before.</string>
+    <string name="setup_callaudio_quality_hint">Wideband carries call audio at 16 kHz when it goes over the Home Assistant connection (away from home). Compatibility uses the old 8 kHz telephone quality; use it if the sound is bad on a poor connection.</string>
+    <string name="setup_callaudio_note_permanent">Wideband unavailable on this phone</string>
+    <string name="setup_callaudio_note_temp">Wideband failed on this phone; using 8 kHz for up to 24 hours</string>
+    <string name="setup_callaudio_path_heading">Advanced: call audio path</string>
+    <string name="setup_callaudio_path_auto">Automatic</string>
+    <string name="setup_callaudio_path_frames">Frames</string>
+    <string name="setup_callaudio_path_webrtc">WebRTC</string>
+    <string name="setup_callaudio_path_hint">Applies only on your home network, for comparing the two audio paths. Away from home the choice is ignored. It returns to Automatic after 24 hours and is shown on the call screen while it is set.</string>
+    <string name="call_audio_path_forced">Audio path: %1$s (Settings)</string>
+    <string name="setup_house_heading">House calls</string>
+    <string name="setup_house_receive_switch">Receive house calls in Portico</string>
+    <string name="setup_house_receive_hint">Off by default. Turn on to ring from Portico house calls.</string>
+    <string name="setup_house_dnd_switch">Tell the house when Do Not Disturb is on</string>
+    <string name="setup_house_dnd_hint">Callers see Do Not Disturb before they call. A door call rings through it only while \"Door calls\" may override Do Not Disturb.</string>
+
+    <!-- 0.6.75: the call window (the incoming door call and the call, full screen). -->
+    <string name="cw_label">Incoming door call</string>
+    <string name="cw_status_incoming">Ringing</string>
+    <string name="cw_status_ring_only">Ringing (answer in the Intercom app)</string>
+    <string name="cw_answer">Answer</string>
+    <string name="cw_decline">Decline</string>
+    <string name="cw_close">Close</string>
+    <!-- 0.6.76: the ring's notification while the call window is on screen: silent, no banner (the window rings). -->
+    <string name="channel_ring_window_name">Door calls while the screen is in use</string>
+    <string name="channel_ring_window_description">Silent notice that a door call is ringing while its call window is open. The window rings with the sound and vibration set for \"Door calls\".</string>
+
+    <!-- M7 3b-A: the roster page of Home's pager. Drawn only when the server says house calls are on for this phone. -->
+    <string name="roster_call">Call</string>
+    <string name="roster_open_call">Open</string>
+    <string name="roster_call_desc">Call %1$s</string>
+    <string name="roster_row_desc">%1$s, %2$s</string>
+    <string name="roster_everyone">Everyone</string>
+    <string name="roster_everyone_one">Everyone (1 phone)</string>
+    <string name="roster_everyone_n">Everyone (%1$d phones)</string>
+    <string name="roster_status_available">Available</string>
+    <string name="roster_status_by_notification">Rings by notification</string>
+    <string name="roster_status_not_reachable">Not reachable</string>
+    <string name="roster_status_dnd">Do not disturb</string>
+    <string name="roster_status_on_a_call">On a call</string>
+    <string name="roster_status_calls_off">Calls switched off</string>
+    <string name="roster_status_no_receivers">No phone is set to receive house calls</string>
+    <string name="roster_status_gone">Not available any more</string>
+    <string name="roster_status_not_available">Not available</string>
+    <string name="roster_status_not_connected">Not connected to Home Assistant</string>
+    <string name="roster_status_calling">Calling…</string>
+
+    <!-- DEV-713 S1: live video on Home's camera tiles. The LIVE chip is the live/still switch of a tile (a tap on the tile stays big/small). -->
+    <string name="live_chip_label">LIVE</string>
+    <string name="live_chip_desc_on">Live video. Switch to the still picture</string>
+    <string name="live_chip_desc_pending">Live video is starting. Switch to the still picture</string>
+    <string name="live_chip_desc_retry">Live video is not running. Try again</string>
+    <string name="live_chip_desc_offer">Still picture. Switch to live video</string>
+    <string name="live_notice_away">Live video away from home is not available yet</string>
+    <string name="live_notice_notsetup">Live video away from home is not set up for this camera</string>
+    <string name="live_notice_nolive">Live unavailable here: this camera has no live video</string>
+    <string name="live_notice_toomany">Live unavailable here: too many live streams</string>
+    <string name="live_notice_decoder">Live unavailable here: this phone could not show the video</string>
+    <string name="live_notice_connect">Live unavailable here: could not connect</string>
+    <string name="live_notice_server">Live unavailable here: Home Assistant does not offer it</string>
+    <string name="live_notice_hot">Live paused: the phone is hot</string>
+    <string name="live_notice_phonelimit">Live unavailable here: too many live videos for this phone</string>
+    <!-- A-10 / DEV-702: the roaming block. Held back: live video and still pictures. Never held back: the ring, the call, the doors. -->
+    <string name="roaming_chip">Roaming: tap to show</string>
+    <string name="roaming_chip_desc">Pictures are paused on a roaming or foreign mobile plan. Show them for this trip</string>
+    <string name="roaming_notice">Roaming: pictures are paused to save your data plan. Tap to show them for this trip.</string>
+    <string name="setup_traffic_heading">Data used by this app</string>
+    <string name="setup_traffic_mobile">Mobile</string>
+    <string name="setup_traffic_wifi">Wi-Fi</string>
+    <string name="setup_traffic_video">Video</string>
+    <string name="setup_traffic_calls">Calls</string>
+    <string name="setup_traffic_other">Other</string>
+    <string name="setup_traffic_total">Total</string>
+    <string name="setup_traffic_today">Today</string>
+    <string name="setup_traffic_month">This month</string>
+    <string name="setup_traffic_since">Since %1$s</string>
+    <string name="setup_traffic_reset">Reset</string>
+    <string name="setup_traffic_reset_done">The data counter was reset</string>
+</resources>

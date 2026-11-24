@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      The app theme. Every activity extends AppCompatActivity, which throws
+      "You need to use a Theme.AppCompat theme" on setContentView without one; the scaffold
+      manifest set no theme at all. DayNight follows the system dark mode.
+    -->
+    <style name="Theme.Portico" parent="Theme.AppCompat.DayNight.DarkActionBar" />
+
+    <!-- Home draws its own top line (title, status, menu), so the system action bar would only repeat the title. -->
+    <style name="Theme.Portico.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar" />
+
+    <!-- PR-F: the full-screen ring screen has no action bar. -->
+    <style name="Theme.Portico.Ring" parent="Theme.AppCompat.DayNight.NoActionBar" />
+
+    <!-- 0.6.75: the call window (an incoming door call, then the call): dark, edge to edge, no action bar. -->
+    <style name="Theme.Portico.CallWindow" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/call_window_bg</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- PR-C2: the QR scanner is a full-screen viewfinder, no action bar. -->
+    <style name="Theme.Portico.Scan" parent="Theme.AppCompat.NoActionBar" />
+</resources>

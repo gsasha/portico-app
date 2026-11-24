@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PR-J: the platform network policy (docs/reference/network-policy.md).
+
+  Android blocks cleartext (http) at this app's target SDK unless this file allows it, and the
+  file is STATIC per APK: it cannot say "http only on the LAN" for an address entered at runtime.
+  So cleartext is permitted here for the whole app, and the real rule is the app's own code:
+  core/src/main/kotlin/com/meda/portico/core/net/UrlPolicy.kt (https always; plain http
+  only to a private/LAN host). Every connect path checks it: enrollment/Setup, SignalingClient
+  before each connect, and OkHttpConnector as a backstop.
+
+  All of the app's other traffic (Firebase / Google Play services) is https, set by those
+  libraries. Trust anchors are the platform default (system CAs only; no user-added CAs).
+  MergedManifestTest asserts this file's content and the manifest reference.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

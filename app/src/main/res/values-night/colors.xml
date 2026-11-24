@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="home_header_bg">#FF3C3F44</color>
+    <color name="choice_on_bg">#FF8AB4F8</color>
+    <color name="choice_on_text">#FF101214</color>
+    <color name="choice_off_text">#FFE8EAED</color>
+    <color name="choice_stroke">#FF80868B</color>
+    <color name="choice_stroke_disabled">#FF5F6368</color>
+    <!-- 0.6.69: status dots -->
+    <color name="dot_green">#FF5BC989</color>
+    <color name="dot_amber">#FFF2B93B</color>
+    <color name="dot_red">#FFF28B82</color>
+    <color name="dot_grey">#FF9AA0A6</color>
+</resources>

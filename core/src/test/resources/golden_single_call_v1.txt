@@ -1,0 +1,278 @@
+== answer, mute, unmute, hang up
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+canAnswer=true
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=true at=1000000
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=USER_HANGUP fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+canAnswerAfter=false
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"user_hangup"} answered=true
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=null
+callStore=ANSWERED
+== claim refused: already answered, then a press
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=ENDED end=FAILED fail=already_answered/ALREADY_ANSWERED/Someone else already answered this call/true/false muted=false at=null
+serviceStop
+stopRing entry-gate/gso-0123456789/answer refused: already_answered
+state key=gso-0123456789 gen=2 phase=ENDED end=FAILED fail=already_answered/ALREADY_ANSWERED/Someone else already answered this call/true/false muted=false at=null
+canAnswerAfter=false
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+media calls=1 closes=[1] micOff=[false]
+audio enters=0 leaves=0
+service starts=1 stops=1 pendingTimers=0
+activeStore=null
+callStore=ANSWERED
+== the door ends the call
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=REMOTE_HANGUP fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=null
+callStore=ANSWERED
+== the door goes idle
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=REMOTE_HANGUP fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=null
+callStore=ANSWERED
+== link lost past the grace, hang-up owed, then sent
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=NETWORK_LOST fail=network_lost/NETWORK_LOST/The connection to Home Assistant was lost./false/true muted=false at=1000000
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"error"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"error"} answered=true
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=null
+callStore=ANSWERED
+== link lost and back inside the grace
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+media calls=1 closes=[0] micOff=[false]
+audio enters=1 leaves=0
+service starts=1 stops=0 pendingTimers=1
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== hang up while the claim is in flight
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=ENDED end=USER_HANGUP fail=null/null/null/null/null muted=false at=null
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"user_hangup"} answered=false
+media calls=1 closes=[1] micOff=[false]
+audio enters=0 leaves=0
+service starts=1 stops=1 pendingTimers=0
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== device busy, then a retry that connects
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=ENDED end=FAILED fail=device_busy/DEVICE_BUSY/The door station is busy with another call. Try again in a moment./false/true muted=false at=null
+serviceStop
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=2 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=2 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=2 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=2 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=2 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=2 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+media calls=2 closes=[1, 0] micOff=[false, false]
+audio enters=1 leaves=0
+service starts=2 stops=1 pendingTimers=1
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== microphone denied
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=AWAITING_MIC end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=ENDED end=FAILED fail=mic_denied/MIC_DENIED/Portico needs the microphone to answer. Allow it in the app's settings, then answer again./false/true muted=false at=null
+serviceStop
+media calls=0 closes=[] micOff=[]
+audio enters=0 leaves=0
+service starts=0 stops=1 pendingTimers=0
+activeStore=null
+callStore=RINGING
+== app stopping under a call
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=APP_STOPPED fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"timeout"} answered=false
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== the five minute cap
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=TIME_CAP fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"timeout"} answered=false
+media calls=1 closes=[1] micOff=[false]
+audio enters=1 leaves=1
+service starts=1 stops=1 pendingTimers=0
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== a hang-up owed, then the next call begins
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+state key=gso-0123456789 gen=1 phase=ENDED end=USER_HANGUP fail=null/null/null/null/null muted=false at=1000000
+serviceStop
+beforeBegin
+stopRing entry-gate/gso-next/answer pressed
+state key=gso-next gen=2 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-next gen=2 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"user_hangup"} answered=true
+cmd portico/hangup {"call_id":"gso-0123456789","reason":"error"} answered=false
+media calls=2 closes=[1, 0] micOff=[false, false]
+audio enters=1 leaves=1
+service starts=2 stops=1 pendingTimers=0
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED
+== a restart releases the call the last run left
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+cmd portico/hangup {"call_id":"gso-left-behind","reason":"error"} answered=true
+media calls=0 closes=[] micOff=[]
+audio enters=0 leaves=0
+service starts=0 stops=0 pendingTimers=0
+activeStore=null
+callStore=null
+== a second ring while on a call is refused
+state key=null gen=0 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+beforeBegin
+stopRing entry-gate/gso-0123456789/answer pressed
+state key=gso-0123456789 gen=1 phase=IDLE end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=PREPARING end=null fail=null/null/null/null/null muted=false at=null
+serviceStart
+state key=gso-0123456789 gen=1 phase=CLAIMING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=NEGOTIATING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=CONNECTING end=null fail=null/null/null/null/null muted=false at=null
+state key=gso-0123456789 gen=1 phase=IN_CALL end=null fail=null/null/null/null/null muted=false at=1000000
+canAnswerSecond=false
+state key=gso-second gen=2 phase=ENDED end=FAILED fail=another_call/ANOTHER_CALL/You are already on a call./false/false muted=false at=null
+cmd portico/answer {"door_id":"gate","call_id":"gso-0123456789","client_kind":"browser"} answered=true
+cmd portico/webrtc_offer {"call_id":"gso-0123456789","door_id":"gate","sdp":"v=0 offer"} answered=true
+media calls=1 closes=[0] micOff=[false]
+audio enters=1 leaves=0
+service starts=1 stops=0 pendingTimers=1
+activeStore=ActiveCall(doorId=gate, callId=gso-0123456789, claimedAtMs=1000000)
+callStore=ANSWERED

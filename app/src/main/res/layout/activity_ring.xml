@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PR-F ring screen. It scrolls (memory every-growable-screen-must-scroll): the explanation can
+  wrap to many lines at a large font scale. The stop button comes BEFORE the explanation, so it
+  is above the fold on a small phone (layout check in the PR description). The Answer button comes
+  first of all: it is the one thing a ring screen is for.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/ring_door"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ring_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp" />
+
+        <!-- M7 H2 (gated off): shown only while this phone is on a door call and hold is enabled. -->
+        <TextView
+            android:id="@+id/ring_oncall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="polite"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/ring_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:minHeight="72dp"
+            android:text="@string/ring_answer" />
+
+        <Button
+            android:id="@+id/ring_hold_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:minHeight="72dp"
+            android:text="@string/ring_hold_answer_default"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ring_hold_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="polite"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/ring_stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="64dp"
+            android:text="@string/ring_stop" />
+
+        <include layout="@layout/view_audio_controls" />
+
+        <!-- A2: the caller's camera stills and its custom ring buttons, built in code from the document's `callers`
+             entry for this door. Both are empty (gone-sized) when the document has no entry: the screen is then exactly
+             what it was. They sit BELOW Answer and Stop on purpose: those two stay above the fold. -->
+        <LinearLayout
+            android:id="@+id/ring_stills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/ring_extra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/ring_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ring_explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/ring_explain"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,158 @@
+{
+  "contract": "talk_state/app-side-expectations",
+  "about": "APP-SIDE EXPECTATIONS, HAND-MADE, NOT RECORDED FROM THE SERVER, and NOT a contract. The server's recorded talk_state frames are vendored in ws_v3.json (the '(talk to the gate)' cases, sha256-pinned by WsContractTest) and run by TalkStateServerFramesTest and WsContractReplayTest. This file keeps only what that recording does not contain: (1) the end reasons the server has not recorded (not_connected, failed, no_answer, hangup, an unknown one, and busy with an out- id): the server records only a reason-less ended that carries a call id, and a busy ended whose call_id is null, which the app drops (the run reply's busy error ends the Talk instead); the server never sends time_cap at all, so that mapping is the app's own; (2) dialing and in_call with an out- id arriving after the run reply, as the app would handle them (the recorded dialing has call_id null); (3) in_call twice, other-call and other-door isolation, the no-session case and malformed events; (4) the ring cases (a dialled out- call never rings, by WebSocket and by push). The shape the app reads: {type: 'talk_state', door_id, call_id (out-<16 hex>), state: dialing | in_call | ended, reason?}, sent only to the endpoint that placed the Talk call.",
+  "door_id": "http://192.168.1.7:8091",
+  "call_id": "out-0123456789abcdef",
+  "other_call_id": "out-fedcba9876543210",
+  "state_cases": [
+    {
+      "name": "dialing: already connecting, nothing new",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "dialing"}],
+      "expect": {"phase": "CONNECTING", "station_answered": false, "media_opens": 0, "end_reason": null, "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "in_call twice opens the audio once",
+      "session": "connecting",
+      "events": [
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "in_call"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "in_call"}
+      ],
+      "expect": {"phase": "CONNECTING", "station_answered": true, "media_opens": 1, "end_reason": null, "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, busy",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "busy"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "GATE_BUSY", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, not_connected",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "not_connected"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "GATE_NOT_CONNECTED", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, failed",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "failed"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "FAILED", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, no_answer",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "no_answer"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "NO_ANSWER", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, no reason: the station ended it",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "STATION_ENDED", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended before the station answered, a reason the app does not know: the station ended it",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "something_new"}],
+      "expect": {"phase": "ENDED", "end_reason": "FAILED", "failure_kind": "STATION_ENDED", "media_opens": 0, "hangups": 0}
+    },
+    {
+      "name": "ended in the call: the gate hung up, nothing to release",
+      "session": "in_call",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "hangup"}],
+      "expect": {"phase": "ENDED", "end_reason": "REMOTE_HANGUP", "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "ended in the call at the server's time cap",
+      "session": "in_call",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "time_cap"}],
+      "expect": {"phase": "ENDED", "end_reason": "TIME_CAP", "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "a talk_state for a call this phone did not start is ignored (another out- id)",
+      "session": "connecting",
+      "events": [
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-fedcba9876543210", "state": "in_call"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-fedcba9876543210", "state": "ended", "reason": "busy"}
+      ],
+      "expect": {"phase": "CONNECTING", "station_answered": false, "media_opens": 0, "end_reason": null, "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "a talk_state for another door is ignored",
+      "session": "connecting",
+      "events": [{"type": "talk_state", "door_id": "http://192.168.1.9:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "busy"}],
+      "expect": {"phase": "CONNECTING", "station_answered": false, "media_opens": 0, "end_reason": null, "failure_kind": null, "hangups": 0}
+    },
+    {
+      "name": "no talk session: every talk_state is ignored and nothing is touched",
+      "session": "none",
+      "events": [
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "dialing"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "in_call"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "busy"}
+      ],
+      "expect": {"phase": "IDLE", "untouched": true}
+    },
+    {
+      "name": "malformed talk_state events do nothing (unknown state, no door, no call id, a non-out- id)",
+      "session": "connecting",
+      "events": [
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "out-0123456789abcdef", "state": "ringing"},
+        {"type": "talk_state", "call_id": "out-0123456789abcdef", "state": "ended", "reason": "busy"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "state": "ended", "reason": "busy"},
+        {"type": "talk_state", "door_id": "http://192.168.1.7:8091", "call_id": "gso-1", "state": "ended", "reason": "busy"}
+      ],
+      "expect": {"phase": "CONNECTING", "station_answered": false, "media_opens": 0, "end_reason": null, "failure_kind": null, "hangups": 0}
+    }
+  ],
+  "ring_cases": [
+    {
+      "name": "ws: a normal ring rings",
+      "via": "ws",
+      "input": {"type": "call_state_changed", "door_id": "gate.example", "call_id": "gso-1760000000000000000-1-a1b2c3", "state": "ringing", "prev_state": "idle"},
+      "expect": "ring"
+    },
+    {
+      "name": "ws: a dialled call's ringing never rings",
+      "via": "ws",
+      "input": {"type": "call_state_changed", "door_id": "gate.example", "call_id": "out-0123456789abcdef", "state": "ringing", "prev_state": "idle"},
+      "expect": "nothing"
+    },
+    {
+      "name": "ws: a dialled call's snapshot ringing never rings",
+      "via": "ws",
+      "input": {"type": "call_state_changed", "snapshot": true, "door_id": "gate.example", "call_id": "out-0123456789abcdef", "state": "ringing"},
+      "expect": "nothing"
+    },
+    {
+      "name": "ws: a dialled call's answered, active and ended post nothing either",
+      "via": "ws",
+      "input": {"type": "call_state_changed", "door_id": "gate.example", "call_id": "out-0123456789abcdef", "state": "ended", "prev_state": "active"},
+      "expect": "nothing"
+    },
+    {
+      "name": "push: a normal ring rings",
+      "via": "push",
+      "input": {"pv": "2", "kind": "ring", "door_ref": "d-6e5163e1070819ff1e4336aaf9d93c38", "call_id": "gso-1760000000000000000-1-a1b2c3", "seq": "1", "t": "1760000000000", "exp": "1760000045000"},
+      "expect": "ring"
+    },
+    {
+      "name": "push: a dialled call's ring is silent",
+      "via": "push",
+      "input": {"pv": "2", "kind": "ring", "door_ref": "d-6e5163e1070819ff1e4336aaf9d93c38", "call_id": "out-0123456789abcdef", "seq": "1", "t": "1760000000000", "exp": "1760000045000"},
+      "expect": "silent"
+    },
+    {
+      "name": "push: a dialled call's late ring is silent, not a Missed call",
+      "via": "push",
+      "input": {"pv": "2", "kind": "ring", "door_ref": "d-6e5163e1070819ff1e4336aaf9d93c38", "call_id": "out-0123456789abcdef", "seq": "1", "t": "1759990000000", "exp": "1759990045000"},
+      "expect": "silent"
+    },
+    {
+      "name": "push: a dialled call's ended is silent, not a Missed call",
+      "via": "push",
+      "input": {"pv": "2", "kind": "ended", "door_ref": "d-6e5163e1070819ff1e4336aaf9d93c38", "call_id": "out-0123456789abcdef", "seq": "3", "t": "1760000009000"},
+      "expect": "silent"
+    }
+  ]
+}

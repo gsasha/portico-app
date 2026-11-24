@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Home: the phone's cameras and buttons, built by Home Assistant (portico-ha content design).
+  The page below the pinned top line scrolls: four camera tiles and a handful of buttons already exceed a phone's
+  height, and nothing on the build host can show the layout, so nothing here may depend on fitting
+  one screen. The blocks are added in code (HomeActivity) from HomeModel's view.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 0.6.52: PINNED. The top line is a fixed sibling ABOVE the ScrollView, so it never scrolls away. ONE top line (the activity has no system action bar: Theme.Portico.NoActionBar): the title (left, the home's name from the plugin, else 'Portico'; takes the spare width and wraps rather than clips, so a long
+         "PAUSED until 14:30" and a large font scale both fit), the connection status, and the menu button
+         at the top-right corner (Settings / Status / About). The status is up here on purpose: it is what
+         explains a blank picture, so it must never be something to scroll to. The dot's colour is the
+         health, the word under it the route. Tapping it opens Settings, where the per-path reasons are.
+         Every size is wrap_content or a minimum; nothing has a fixed width. -->
+    <LinearLayout
+        android:id="@+id/home_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_header_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+
+        <TextView
+            android:id="@+id/home_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/home_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <!-- The page selector (two or more pages): takes the title's slot in the same line, scrolls sideways by itself
+             so many pages or a large font never push the status or the menu off. Built in code from HomeModel's tabs.
+             Hidden (gone) otherwise; the title is shown then. -->
+        <HorizontalScrollView
+            android:id="@+id/home_tabs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/home_tabs_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/home_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/home_status_description"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/home_status_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/home_status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/home_menu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/home_menu_description"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_menu_hamburger"
+            android:tint="?android:attr/textColorPrimary" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
+            <!-- 0.6.49: NO side padding on this root: the camera grid must reach the screen edge. The negative-margin trick of 0.6.48 could never
+                 show, because each block's box and the blocks container clip their children to their own (padded) bounds. Every other child
+                 carries its own 16dp side margin instead (BlockViews does the same for headings and button rows). -->
+
+            <TextView
+                android:id="@+id/home_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/home_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:visibility="gone" />
+
+            <!-- app-05: the Ring page of a station call (the calling door's cameras and ring_buttons while it rings, call_buttons once connected),
+                 drawn above the page while the call lasts. Built in code from StationPanel; gone otherwise. -->
+            <LinearLayout
+                android:id="@+id/home_station_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/home_station_stills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/home_station_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <!-- The selected page's blocks, built in code from HomeModel's BlockView list (DEV-658): per block a heading, a
+                 camera grid and rows of buttons. The whole screen scrolls (the ScrollView above), so any number of blocks fits. -->
+            <LinearLayout
+                android:id="@+id/home_blocks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/home_blocks_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/home_no_blocks"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

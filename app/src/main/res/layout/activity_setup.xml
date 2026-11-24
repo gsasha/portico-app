@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  P2 Setup. The whole screen scrolls: the pasted google-services.json makes its field tall,
+  and nobody on the build host can see the layout, so nothing here may depend on fitting
+  one screen. The paste fields grow with their text (no maxLines, so no nested scrolling).
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setup_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/setup_settings_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <!-- Settings / Status split (APP-04). One activity, two screens: the screen is chosen by the EXTRA_SCREEN intent extra
+             and the other screen's group is GONE. Every row below keeps its id and its code; only the group it sits in is new. -->
+        <!-- Pause (begin). "Pause this phone", first on the screen: three choices while running;
+             while paused an obvious "Paused until HH:MM / until you resume" line and Resume. -->
+        <!-- DEV-807 Panel mode (begin). A read-only line, shown only while the server says this device is a panel (no switch); while it is, a lock bar
+             covers the entries that could silence the panel and Pause is not offered (core PanelSettingsGuard). -->
+        <TextView
+            android:id="@+id/setup_panel_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="@string/panel_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/setup_panel_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <TextView
+            android:id="@+id/setup_panel_lock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:longClickable="true"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:text="@string/panel_locked"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/setup_panel_idle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:visibility="gone" />
+        <!-- DEV-807 Panel mode (end) -->
+
+        <TextView
+            android:id="@+id/setup_pause_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/pause_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/setup_pause_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/setup_pause_resume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:text="@string/pause_resume"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/setup_pause_choices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/setup_pause_1h"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/pause_1h" />
+
+            <Button
+                android:id="@+id/setup_pause_4h"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/pause_4h" />
+
+            <Button
+                android:id="@+id/setup_pause_forever"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/pause_until_resumed" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/setup_pause_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/pause_hint" />
+        <!-- Pause (end) -->
+
+        <!-- DEV-544: the one-time-code redemption's progress or failure; hidden when idle. -->
+        <TextView
+            android:id="@+id/setup_enroll_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- 0.6.58: per network class (Wi-Fi, mobile, roaming) a connection row (Stay connected | Push notification) and a video row
+             (Live video big | small | Stills | Off). The toggle strips are built by SetupActivity from :core's enums, into these ChoiceStrips. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_net_wifi"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_conn_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_video_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_net_mobile"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_conn_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_video_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_net_roaming"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_conn_roaming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_video_roaming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <!-- 0.6.64: one row to Android's page for the door-call ring channel (ringtone, vibration, Do Not Disturb override). -->
+        <Button
+            android:id="@+id/setup_ring_control"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_ring_control" />
+
+        <!-- 0.6.69: every button that opens an Android system page; the Status lines point here. -->
+        <TextView
+            android:id="@+id/setup_android_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_android_settings"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/setup_android_app"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_android_app" />
+
+        <Button
+            android:id="@+id/setup_android_notifications"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_android_notifications" />
+
+        <Button
+            android:id="@+id/setup_android_calls"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_android_calls" />
+
+        <Button
+            android:id="@+id/setup_android_status_channel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_android_status_channel" />
+
+        <Button
+            android:id="@+id/setup_android_overlay"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/setup_android_overlay" />
+
+        <!-- DEV-811 P2: call audio. Quality (Wideband | Compatibility) and, under Advanced, the path on the home network (Automatic | Frames | WebRTC). Plain prefs, so no wait for the Keystore. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_callaudio_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_callaudio_quality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_callaudio_quality_hint" />
+
+        <TextView
+            android:id="@+id/setup_callaudio_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_callaudio_path_heading"
+            android:textStyle="bold" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_callaudio_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_callaudio_path_hint" />
+
+        <!-- DEV-811: reconnect while ringing. Make-before-break (default) | Classic (the strict 2 s drop and reconnect of 0.6.90). Plain prefs. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_linkrace_heading"
+            android:textStyle="bold" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_linkrace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_linkrace_hint" />
+
+        <!-- the owner 2026-11-21: answer a door call from the lock screen without the unlock (default on). Plain prefs. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_answer_nolock_heading"
+            android:textStyle="bold" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_answer_nolock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_answer_nolock_hint" />
+
+        <!-- the owner 2026-11-21: after answering from the lock screen, ask for the unlock once (face / fingerprint). Default on. Plain prefs. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_unlock_answer_heading"
+            android:textStyle="bold" />
+
+        <com.meda.portico.setup.ChoiceStrip
+            android:id="@+id/setup_unlock_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_unlock_answer_hint" />
+
+        <!-- M7 3b-B: house calls. Gone, and never drawn, unless Home Assistant says house calls are on for this phone. -->
+        <LinearLayout
+            android:id="@+id/setup_house_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:accessibilityHeading="true"
+                android:text="@string/setup_house_heading"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/setup_house_receive_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/setup_house_receive_switch" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/setup_house_receive_hint" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/setup_house_dnd_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="48dp"
+                android:text="@string/setup_house_dnd_switch" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/setup_house_dnd_hint" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/setup_enrollment_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <!-- PR-C2: scan the enrollment QR (begin). Feeds the same check and save as the paste
+             field below, which stays: it is the fallback, and the way without a camera. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/setup_scan_or_paste" />
+
+        <Button
+            android:id="@+id/setup_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:text="@string/setup_scan" />
+        <!-- PR-C2: scan the enrollment QR (end) -->
+
+        <EditText
+            android:id="@+id/setup_enrollment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:hint="@string/setup_enrollment_hint"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:minLines="3"
+            android:saveEnabled="false"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/setup_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/setup_save" />
+
+        <TextView
+            android:id="@+id/setup_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textIsSelectable="true" />
+
+        <!-- DEV-705: Connection log (begin). One short report per connection sequence, sent to Home Assistant over this app's own
+             connection. On by default; the switch empties the queue when it goes off. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/connlog_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/setup_connlog_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:text="@string/connlog_switch" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/connlog_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setup_status_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <!-- 0.6.70: a note shown only while Settings load or cannot be opened (the facts that were here live in the Home Assistant section). -->
+        <TextView
+            android:id="@+id/setup_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textIsSelectable="false"
+            android:visibility="gone" />
+
+        <!-- PR-F: ring and push status (begin). Filled by SetupActivity: one line per check,
+             problems first, each with its fix button. Above the fold on purpose. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_ha_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <LinearLayout
+            android:id="@+id/setup_ha_checks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_push_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <LinearLayout
+            android:id="@+id/setup_push_checks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Offline registration (begin). Shown only when :core's OfflineRegistration says so:
+             configured, not connected for 15 s, a Firebase value in hand. The string itself is
+             never shown on screen or in the status lines; only the clipboard gets it. -->
+        <LinearLayout
+            android:id="@+id/setup_offline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/setup_offline_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/setup_offline_copy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/offline_reg_copy"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/setup_offline_copied"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+        <!-- Offline registration (end) -->
+
+        <!-- PR-F: ring and push status (end) -->
+
+        <!-- A-10 / 0.6.70: data used by this app, a table (built in SetupActivity.renderTraffic): a Mobile and a Wi-Fi column. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/setup_traffic_heading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <!-- 0.6.71: a vertical stack of weighted rows (0dp wide, 30 / 35 / 35 %): the table always fits the screen width. -->
+        <LinearLayout
+            android:id="@+id/setup_traffic_rows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/setup_traffic_reset"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/setup_traffic_reset" />
+
+        <!-- 0.6.72: the push/ring journal and the connection log are no longer listed here (diagnostics, not for the owner to read);
+             they are still collected and sent to Home Assistant. One button shares them as plain text. -->
+        <Button
+            android:id="@+id/setup_share_diagnostics"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"
+            android:text="@string/share_diagnostics" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

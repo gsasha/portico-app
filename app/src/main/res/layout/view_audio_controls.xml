@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A-06 / APP-02: the route chooser and the in-call volume row, included by the ring and in-call screens. Both live inside a ScrollView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- APP-02: Speaker / Bluetooth / Phone, replacing A-06's one cycling key. Gone when there is nothing to choose. -->
+    <com.meda.portico.call.RouteChooserView
+        android:id="@+id/audio_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/audio_vol_down"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/audio_volume_down"
+            android:minHeight="56dp"
+            android:text="@string/audio_minus" />
+
+        <TextView
+            android:id="@+id/audio_vol_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityLiveRegion="polite"
+            android:gravity="center"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/audio_vol_up"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/audio_volume_up"
+            android:minHeight="56dp"
+            android:text="@string/audio_plus" />
+    </LinearLayout>
+</LinearLayout>
