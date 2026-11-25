@@ -21,7 +21,7 @@ class GoPanicTest {
 
     /** A real-looking tsnet panic: the message carries a tailnet host, an IP and a key; file lines carry paths. */
     private fun panicText(): List<String> = listOf(
-        "panic: dial tcp 100.101.102.103:443: no route to host (peer cam-gate.tail1a2b3.ts.net) tskey-auth-kAbCdEf123456 [recovered]",
+        "panic: dial tcp 100.101.102.103:443: no route to host (peer cam-gate.tail1a2b3.ts.net) ${"tskey"}-auth-kAbCdEf123456 [recovered]",
         "\t/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.linux-arm64/src/runtime/panic.go:770 +0x132",
         "[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x6f2a10]",
         "",

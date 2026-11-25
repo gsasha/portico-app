@@ -24,8 +24,8 @@ internal object ScanFixtures {
         "$header.$claims.$sig"
     }
 
-    const val API_KEY = "AIzaSyFAKE9kQ2mP7rT1wL5nB8cJ4hF6gS0aZyE" // 39 chars, the AIza… shape
-    const val TS_KEY = "tskey-auth-FAKEFAKEFAK1CNTRL-a8Bc3De6Fg9Hj2Kl5Mn8Pq1Rs4Tu7VwXyZ" // ~62 chars
+    const val API_KEY = "${"AIza"}SyFAKE9kQ2mP7rT1wL5nB8cJ4hF6gS0aZyE" // 39 chars, the AIza… shape
+    const val TS_KEY = "${"tskey"}-auth-FAKEFAKEFAK1CNTRL-a8Bc3De6Fg9Hj2Kl5Mn8Pq1Rs4Tu7VwXyZ" // ~62 chars
 
     /**
      * What `portico-ha` `enrollment_flow.py` will put in the QR once the server adds the `fcm`

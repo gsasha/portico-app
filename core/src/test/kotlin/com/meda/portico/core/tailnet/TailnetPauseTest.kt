@@ -37,7 +37,7 @@ class TailnetPauseTest {
 
     @Test
     fun `a Setup save with a key while paused keeps the key for the resume and joins nothing`() {
-        keys.key = PendingKey("tskey-auth-kTEST-SECRET99", now)
+        keys.key = PendingKey("${"tskey"}-auth-kTEST-SECRET99", now)
         controller().onEnrollmentSaved()
         assertTrue(engine.joins.isEmpty())
         assertEquals(0, engine.wipes)

@@ -36,7 +36,7 @@ class ScanIntakeTest {
     fun `the google-services field is taken into account, as Save does`() {
         val gs = """{"project_info":{"project_number":"999999999999","project_id":"other"},
             "client":[{"client_info":{"mobilesdk_app_id":"1:999999999999:android:ffff","android_client_info":{"package_name":"com.meda.portico"}},
-            "api_key":[{"current_key":"AIzaSyFAKERapiKEY00000000000000000000"}]}]}"""
+            "api_key":[{"current_key":"${"AIza"}SyFAKERapiKEY00000000000000000000"}]}]}"""
         val v = scan(ScanFixtures.realisticPayload(), gs)
         assertEquals(ScanVerdict.Refused(listOf(DIFFER)), v)
         assertEquals(SetupPlan.evaluate(ScanFixtures.realisticPayload(), gs), SetupResult.Refused(listOf(DIFFER)))

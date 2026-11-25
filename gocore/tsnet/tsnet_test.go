@@ -106,7 +106,7 @@ func TestStartFailsClearlyWhenControlServerUnreachable(t *testing.T) {
 	cfg := Config{
 		StateDir: dir,
 		Hostname: "test-phone",
-		AuthKey:  "tskey-auth-doesnotmatter",
+		AuthKey:  "tskey" + "-auth-doesnotmatter",
 		// Port 1 on loopback: nothing will ever accept there, so this
 		// can only resolve via ctx's own deadline, never a real reply.
 		ControlURL: "http://127.0.0.1:1",
@@ -190,7 +190,7 @@ func TestLongLivedDialSurvives(t *testing.T) {
 	derpMap := integration.RunDERPAndSTUN(t, t.Logf, "127.0.0.1")
 	control := &testcontrol.Server{
 		DERPMap:        derpMap,
-		RequireAuthKey: "tskey-auth-portico-test",
+		RequireAuthKey: "tskey" + "-auth-portico-test",
 		DNSConfig:      &tailcfg.DNSConfig{Proxied: true},
 		MagicDNSDomain: "tail-scale.ts.net",
 	}

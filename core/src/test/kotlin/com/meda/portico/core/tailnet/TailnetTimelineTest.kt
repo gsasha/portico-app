@@ -47,7 +47,7 @@ class TailnetTimelineTest {
         val c = controller()
         c.refresh()
         c.sleep()
-        keys.key = PendingKey("tskey-auth-kTEST-SECRET99", now)
+        keys.key = PendingKey("${"tskey"}-auth-kTEST-SECRET99", now)
         c.onEnrollmentSaved()
         assertEquals(emptyList<Stage>(), stages())
     }

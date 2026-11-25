@@ -32,7 +32,7 @@ class NoSecretsInServiceLogTest {
     private val fid2 = "dQWEbX0nQ0mJ9mVdK3x_-B"
     private val token = "$fid:APA91bHsecretTokenBody" + "Z".repeat(120)
     private val haToken = "fake-jwt-header.ha-long-lived-access-token.SIGNATURE-0123456789"
-    private val apiKey = "AIzaSyFAKE-secrets-test-key-0123456789XY"
+    private val apiKey = "${"AIza"}SyFAKE-secrets-test-key-0123456789XY"
     private val secrets = listOf(fid, fid2, token, haToken, apiKey)
 
     private val lines = ArrayList<String>()

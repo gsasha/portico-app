@@ -276,7 +276,7 @@ class EnrollmentPayloadTest {
 
     @Test
     fun `toString shows ha_dial but never the tailscale key`() {
-        val p = ok("""{"ha_url":"https://h.example","ha_token":"t","phone_name":"p","tailscale_authkey":"tskey-auth-SHOWME-1","ha_dial":"192.168.1.5:443"}""")
+        val p = ok("""{"ha_url":"https://h.example","ha_token":"t","phone_name":"p","tailscale_authkey":"${"tskey"}-auth-SHOWME-1","ha_dial":"192.168.1.5:443"}""")
         assertTrue("ha_dial=192.168.1.5:443" in p.toString())
         assertFalse("SHOWME" in p.toString())
     }

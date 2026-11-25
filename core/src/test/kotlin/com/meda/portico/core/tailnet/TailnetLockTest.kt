@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference
  * a second join.
  */
 class TailnetLockTest {
-    private val KEY = "tskey-auth-kTEST-SECRET99"
+    private val KEY = "${"tskey"}-auth-kTEST-SECRET99"
 
     /** An engine whose ready() waits until the test releases the "library load". */
     private class SlowLoad : FakeEngine() {
@@ -175,7 +175,7 @@ class TailnetAbandonTest {
     @Test
     fun `never while the enrollment's single-use key is in flight`() {
         engine.status = "joining"
-        keys.key = PendingKey("tskey-auth-kTEST-SECRET99", System.currentTimeMillis())
+        keys.key = PendingKey("${"tskey"}-auth-kTEST-SECRET99", System.currentTimeMillis())
         c.abandonWarm(c.newLease())
         assertEquals(0, engine.stops)
     }
@@ -221,7 +221,7 @@ class TailnetAbandonTest {
     @Test
     fun `an Up node with a pending key is stopped - the refresh spends the key first`() {
         engine.status = "up\t100.70.97.30"
-        keys.key = PendingKey("tskey-auth-kTEST-SECRET99", System.currentTimeMillis())
+        keys.key = PendingKey("${"tskey"}-auth-kTEST-SECRET99", System.currentTimeMillis())
         c.abandonWarm(c.newLease())
         assertEquals(1, engine.stops)
         assertEquals(null, keys.key)

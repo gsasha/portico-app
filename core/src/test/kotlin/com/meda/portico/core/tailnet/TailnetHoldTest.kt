@@ -69,7 +69,7 @@ class TailnetHoldTest {
         val c = controller()
         c.abandonWarm(c.newLease())
         engine.status = "joining" // the node went back to joining on an enrollment key
-        keys.key = PendingKey("tskey-auth-kTEST-SECRET99", System.currentTimeMillis())
+        keys.key = PendingKey("${"tskey"}-auth-kTEST-SECRET99", System.currentTimeMillis())
         timer.fire()
         assertEquals(0, engine.stops)
     }

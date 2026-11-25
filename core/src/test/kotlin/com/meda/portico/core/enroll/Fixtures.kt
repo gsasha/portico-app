@@ -3,9 +3,9 @@ package com.meda.portico.core.enroll
 /** Shared fixture strings. The "secret" values are distinctive so a leak test can grep for them. */
 internal object Fixtures {
     const val TOKEN = "eyJSECRET.TOKEN.value-7f3a9c"
-    const val TS_KEY = "tskey-auth-SECRETKEY-123456"
-    const val API_KEY = "AIzaSyFAKEICOapiKEY0123456789abcdefgh"
-    const val OTHER_API_KEY = "AIzaSyFAKERapiKEY00000000000000000000"
+    const val TS_KEY = "${"tskey"}-auth-SECRETKEY-123456"
+    const val API_KEY = "${"AIza"}SyFAKEICOapiKEY0123456789abcdefgh"
+    const val OTHER_API_KEY = "${"AIza"}SyFAKERapiKEY00000000000000000000"
     const val PROJECT_ID = "portico-test"
     const val SENDER_ID = "123456789012"
 

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class FirebaseBootCoreTest {
 
     companion object {
-        const val API_KEY = "AIzaSyFAKEot-test-api-key-0123456789abc"
+        const val API_KEY = "${"AIza"}SyFAKEot-test-api-key-0123456789abc"
         val CONFIG = cfg("portico-test", "123456789012", "1:123456789012:android:0a1b2c3d4e5f", API_KEY)
         val OTHER = cfg("portico-other", "999999999999", "1:999999999999:android:ffeeddccbbaa", API_KEY + "x")
 

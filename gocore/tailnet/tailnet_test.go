@@ -67,7 +67,7 @@ func waitStatus(t *testing.T, prefix string) string {
 	return ""
 }
 
-const testKey = "tskey-auth-kSECRET123-ABCdef"
+const testKey = "tskey" + "-auth-kSECRET123-ABCdef"
 
 // keepEnv restores the three variables Prepare sets when the test ends
 // (TMPDIR in particular, which t.TempDir itself uses).

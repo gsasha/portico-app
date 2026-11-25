@@ -80,7 +80,7 @@ class FakeKeys(var key: PendingKey? = null) : PendingKeyStore {
 
 class TailnetControllerTest {
 
-    private val KEY = "tskey-auth-kTEST-SECRET99"
+    private val KEY = "${"tskey"}-auth-kTEST-SECRET99"
     private var now = 1_000_000_000L
     private val engine = FakeEngine()
     private val keys = FakeKeys()

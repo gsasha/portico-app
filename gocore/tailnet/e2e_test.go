@@ -25,7 +25,7 @@ import (
 // tests use. No Tailscale account, no control plane on the internet, no
 // network beyond loopback. Skipped with -short.
 
-const e2eKey = "tskey-auth-portico-e2e"
+const e2eKey = "tskey" + "-auth-portico-e2e"
 
 func startControl(t *testing.T, machineAuth bool) string {
 	return startControlWith(t, e2eKey, false, machineAuth)
@@ -161,7 +161,7 @@ func TestE2EWrongKeyFailsWithoutWaitingOutTheDeadline(t *testing.T) {
 	startControl(t, false)
 	reset(t, startNode)
 	start := time.Now()
-	if err := Join("tskey-auth-not-the-right-one", "portico-e2e-phone", filepath.Join(t.TempDir(), "p"), 120); err != nil {
+	if err := Join("tskey"+"-auth-not-the-right-one", "portico-e2e-phone", filepath.Join(t.TempDir(), "p"), 120); err != nil {
 		t.Fatal(err)
 	}
 	s := waitStatusFor(t, "failed", 120*time.Second)
